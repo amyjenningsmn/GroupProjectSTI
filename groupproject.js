@@ -1,28 +1,28 @@
+function Person(empName,empNumber,salaryPreBonus,employeeRank) {
+  this.empName = empName;
+  this.empNumber = empNumber
+  this.salaryPreBonus = salaryPreBonus;
+  this.employeeRank = employeeRank;
+}
 
-var atticus = ["Atticus", "2405", "47000", 3];
-var jem = ["Jem", "62347", "63500", 4];
-var boo = ["Boo", "11435", "54000", 3];
-var scout = ["Scout", "6243", "74750", 5];
+var atticus = new Person("Atticus", "2405", "47000", 3);
+var jem = new Person("Jem", "62347", "63500", 4);
+var boo = new Person("Boo", "11435", "54000", 3);
+var scout = new Person("Scout", "6243", "74750", 5);
 
 var employees = [atticus, jem, boo, scout];
+// these will then be an array of objects
 
-// new array [name,%, total comp, total bonus]  just for our reference!!
-
-// Testing our function:
-// console.log("Atticus", generating(atticus));
-// console.log("Scout", generating(scout));
-// console.log("Jem", generating(jem));
-// console.log("Boo", generating(boo));
 
 for ( var i = 0; i < employees.length; i++) {
   console.log(generating(employees[i]));
 }
 
 function calcBonus(person) {
-  var name = person[0];
-  var employeeNumber = person[1];
-  var salary = parseInt(person[2]);
-  var rating=person[3];
+  var name = person.empName;
+  var employeeNumber = person.empNumber;
+  var salary = parseInt(person.salaryPreBonus);
+  var rating=person.employeeRank;
 
   var bonusPercent=0;
 
@@ -40,7 +40,7 @@ function calcBonus(person) {
       bonusPercent=0;
   }
 
-  if (employeeNumber.length == 4){
+if (person.empNumber.length == 4){
     bonusPercent+=0.05;
   }
 
@@ -55,18 +55,22 @@ function calcBonus(person) {
   return bonusPercent;
 }
 
-//console.log(calcBonus(atticus));
-
 function generating(person){
-  var salary=parseInt(person[2]);
+  var salary=parseInt(person.salaryPreBonus);
   var bonusPercent=calcBonus(person);
+  var displayPercentage=(bonusPercent*100) + "%";
   var totalBonus=Math.round(bonusPercent * salary);
   var totalComp=totalBonus + salary;
   var newArray=[];
 
-  newArray.push(person[0]);
-  newArray.push(bonusPercent);
-  newArray.push(totalComp);
-  newArray.push(totalBonus);
+  newArray.push(person.empName);
+  newArray.push(displayPercentage);
+  newArray.push(addMoneyLabels(totalComp));
+  newArray.push(addMoneyLabels(totalBonus));
+
   return newArray;
+}
+
+function addMoneyLabels(numberThing) {
+  return '$' + numberThing.toLocaleString();
 }
